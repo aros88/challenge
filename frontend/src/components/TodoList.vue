@@ -5,9 +5,12 @@ import TodoForm from './TodoForm.vue';
 import IconInfo from './icons/IconInfo.vue';
 
 const reRenderKey = ref(0)
-const unmodifiedTodos = ref([]);
 const state = reactive({
-  todos: []
+  todos: [],
+  pagination: {
+    totalPages: 1,
+    page: 1
+  }
 });
 const loading = ref(false)
 
@@ -15,15 +18,17 @@ onMounted(async () => {
   await fetchTodos()
 })
 
-const fetchTodos = async () => {
+const fetchTodos = async (page = 1) => {
   loading.value = true
 
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks`)
+    const perPage = 5
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks?perPage=${perPage}&page=${page}`)
     if (response.ok) {
-      const todos = await response.json()
+      const data = await response.json()
 
-      unmodifiedTodos.value = todos.map(todo => {
+      console.log(data)
+      state.todos = data.tasks.map(todo => {
         return {
           id: todo.id,
           title: todo.title,
@@ -31,18 +36,18 @@ const fetchTodos = async () => {
           editing: false
         }
       })
-      state.todos = unmodifiedTodos.value.map(t => {
-        return {
-          ...t
-        }
-      })
+      state.pagination = {
+        totalPages: data.pagination.totalPages,
+        page: data.pagination.page
+      }
+      reRenderKey.value += 1
 
       loading.value = false
     } else {
       console.error('error fetching data')
     }
   } catch (err) {
-    console.error('error fetching data')
+    console.error('error fetching data', err)
   } finally {
     loading.value = false
   }
@@ -175,10 +180,53 @@ const disableEditing = () => {
       />
     </div>
     <h4 v-show="loading">Loading...</h4>
+    <div class="pagination" v-show="state.pagination.totalPages > 1">
+      <h4>Pages</h4>
+      <ul class="pages">
+        <li
+          v-show="state.pagination.page > 1"
+          @click="fetchTodos(state.pagination.page - 1)"
+        >Prev</li>
+        <li
+          v-for="page in state.pagination.totalPages" :key="page"
+          v-bind:class="{'current-page': (page === state.pagination.page)}"
+          @click="fetchTodos(page)"
+        >
+          {{ page }}
+        </li>
+        <li
+          v-show="state.pagination.page < state.pagination.totalPages"
+          @click="fetchTodos(state.pagination.page + 1)"
+        >Next</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.current-page {
+  background-color: #98F5E1 !important;
+}
+
+.pagination {
+  position: absolute;
+  bottom: 20%;
+  text-align: center;
+}
+
+.pages {
+  display: flex;
+  list-style-type: none;
+}
+
+.pages li {
+  margin-right: 1rem;
+  padding: 0.75rem;
+  border-radius: 10%;
+  background-color: #D9D9D9;
+  cursor: pointer;
+}
+
 h2 {
   display: flex;
   flex-direction: row;
@@ -217,5 +265,9 @@ h2 {
 
 .info-icon{
   width: 1.5rem;
+}
+
+.pagination {
+
 }
 </style>

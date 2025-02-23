@@ -10,13 +10,20 @@ router.get("/", async (req, res) => {
   const perPage = Math.min(req.query.perPage || 20, 100)
   const page = Math.max(req.query.page || 1, 1)
 
+  const totalTasks = await Task.count()
   const tasks = await Task.findAll({
     order: ['createdAt'],
     limit: perPage,
     offset: (page - 1) * perPage
   });
 
-  res.send(tasks);
+  res.send({
+    tasks,
+    pagination: {
+      totalPages: Math.ceil(totalTasks / perPage),
+      page: page
+    }
+  });
 });
 
 router.post("/", async (req, res) => {

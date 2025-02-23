@@ -37,11 +37,11 @@ describe('tasks endpoints', () => {
       .get('/tasks')
 
     expect(response.status).toEqual(200)
-    expect(response.body.length).toEqual(2)
+    expect(response.body.tasks.length).toEqual(2)
     tasks.forEach((t, i) => {
-      expect(response.body[i].id).toEqual(t.id)
-      expect(response.body[i].title).toEqual(t.title)
-      expect(response.body[i].completed).toEqual(t.completed)
+      expect(response.body.tasks[i].id).toEqual(t.id)
+      expect(response.body.tasks[i].title).toEqual(t.title)
+      expect(response.body.tasks[i].completed).toEqual(t.completed)
     })
   })
 
