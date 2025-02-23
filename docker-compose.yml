@@ -3,8 +3,8 @@ services:
     container_name: api
     command: > 
       bash -c "
-        npm run migrate:up &&
-        npm run test &&
+        yarn migrate:up &&
+        yarn test &&
         nodemon app.js
       "
     build: ./api/

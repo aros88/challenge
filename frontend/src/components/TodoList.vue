@@ -208,12 +208,6 @@ const disableEditing = () => {
   background-color: #98F5E1 !important;
 }
 
-.pagination {
-  position: absolute;
-  bottom: 20%;
-  text-align: center;
-}
-
 .pages {
   display: flex;
   list-style-type: none;
@@ -265,9 +259,5 @@ h2 {
 
 .info-icon{
   width: 1.5rem;
-}
-
-.pagination {
-
 }
 </style>

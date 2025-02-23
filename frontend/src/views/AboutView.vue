@@ -32,7 +32,7 @@
           <li>* Rename the .env.sample file into .env and update the values to point to the db instance</li>
         </ul>
       </li>
-      <li>NodeJS & NPM installed</li>
+      <li>NodeJS & yarn installed</li>
     </ul>
     <p>To run the project, type the following in the terminal from the root folder:</p>
     <pre>make build-run</pre>
