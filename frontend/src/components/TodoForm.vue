@@ -1,10 +1,22 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 const emit = defineEmits(["create-todo-focused", "create-todo"])
 
 const todoTitle = ref("")
+const errorState = reactive({
+  error: false,
+  msg: null
+})
 
-const emitCreateTodo = () => {
+const emitCreateTodo = (evt) => {
+  if (todoTitle.value == null) return
+  if (todoTitle.value.trim() === '') {
+    errorState.error = true
+    errorState.msg = "Title cannot be blank"
+
+    return
+  }
+
   emit('create-todo', todoTitle.value)
 }
 </script>
@@ -20,6 +32,9 @@ const emitCreateTodo = () => {
       autofocus
     />
     <button @click="emitCreateTodo">Create</button>
+    <p v-show="errorState.error" class="error-msg">
+      {{ errorState.msg }}
+    </p>
   </form>
 </template>
 
@@ -36,5 +51,10 @@ const emitCreateTodo = () => {
     background-color: #98F5E1;
     border-radius: 0.25rem;
     cursor: pointer;
+  }
+
+  .error-msg {
+    color: #d23737;
+    font-weight: bold;
   }
 </style>

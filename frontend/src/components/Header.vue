@@ -15,11 +15,11 @@ const toggleMobileMenu = () => {
     <nav>
       <div class="mobile-menu">
         <div class="menu-button">
-          <IconHamburger @click="toggleMobileMenu"/>
+          <IconHamburger style="max-width: 50px;" @click="toggleMobileMenu"/>
         </div>
         <div v-show="mobileMenuOpen" class="mobile-menu-list">
           <div class="close-menu-button">
-            <IconClose style="cursor: pointer" @click="toggleMobileMenu" />
+            <IconClose style="cursor: pointer; max-width: 40px;" @click="toggleMobileMenu" />
           </div>
           <ul>
             <li>Home</li>

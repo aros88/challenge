@@ -2,6 +2,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import Todo from './Todo.vue';
 import TodoForm from './TodoForm.vue';
+import IconInfo from './icons/IconInfo.vue';
 
 const reRenderKey = ref(0)
 const unmodifiedTodos = ref([]);
@@ -78,6 +79,7 @@ const setEditing = (id) => {
 
   todo.editing = true
   state.todos.filter(t => t.id !== id).forEach(t => t.editing = false)
+  reRenderKey.value += 1
 }
 
 const completeTodo = async (id) => {
@@ -144,7 +146,15 @@ const disableEditing = () => {
 
 <template>
   <div>
-    <h2>Todos</h2>
+    <h2>
+      List of Todos
+      <div class="tooltip">
+        <IconInfo class="info-icon" />
+        <span class="tooltiptext">
+          Double click on the todos to edit them
+        </span>
+      </div>
+    </h2>
     <TodoForm
       @create-todo="createTodo"
       @create-todo-focused="disableEditing"
@@ -161,6 +171,7 @@ const disableEditing = () => {
         @complete-todo="completeTodo"
         @delete-todo="deleteTodo"
         @update-todo="updateTodo"
+        @cancel-edit="disableEditing"
       />
     </div>
     <h4 v-show="loading">Loading...</h4>
@@ -168,4 +179,43 @@ const disableEditing = () => {
 </template>
 
 <style scoped>
+h2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tooltip {
+  position: relative;
+  width: 5%;
+  margin-left: 0.5rem;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 150px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 1;
+  bottom: 85%;
+  left: 50%;
+  margin-left: -60px;
+
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.info-icon{
+  width: 1.5rem;
+}
 </style>
