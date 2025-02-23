@@ -1,9 +1,10 @@
 <script setup>
+import { ref } from 'vue';
 import IconClose from './icons/IconClose.vue';
   
-  const emit = defineEmits(["edit-todo", "complete-todo", "delete-todo"])
+  const emit = defineEmits(["edit-todo", "update-todo", "complete-todo", "delete-todo"])
 
-  defineProps({
+  const props = defineProps({
     id: {
       type: Number,
       required: true
@@ -21,13 +22,25 @@ import IconClose from './icons/IconClose.vue';
       required: true
     }
   })
+
+  const todoTitle = ref(props.title)
+
+  const updatedTodo = () => {
+    // console.log(todoTitle.value, props.title)
+    emit('update-todo', props.id, todoTitle.value, props.completed)
+  }
+
+  const toggleTodo = () => {
+    console.log(props.id, props.title, !props.completed)
+    emit('update-todo', props.id, props.title, !props.completed)
+  }
 </script>
 
 <template>
   <div class="todo">
-    <input type="checkbox" v-bind:checked="completed" :value="completed" @input="$emit('complete-todo', id)"/>
-    <input type="text" @dblclick="$emit('edit-todo', id)" :readonly="!editing" :value="title"/>
-    <button v-show="editing">Update</button>
+    <input type="checkbox" :checked="completed" @input="toggleTodo"/>
+    <input type="text" @dblclick="$emit('edit-todo', id)" :readonly="!editing" v-model="todoTitle"/>
+    <button v-show="editing" @click="updatedTodo">Update</button>
     <IconClose @click="$emit('delete-todo', id)"/>
   </div>
 </template>

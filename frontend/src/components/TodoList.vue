@@ -7,6 +7,10 @@ const todoList = ref([]);
 const loading = ref(false)
 
 onMounted(async () => {
+  await fetchTodos()
+})
+
+const fetchTodos = async () => {
   loading.value = true
 
   try {
@@ -32,7 +36,7 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
-})
+}
 
 const createTodo = async (title) => {
   try {
@@ -48,13 +52,7 @@ const createTodo = async (title) => {
     })
 
     if (response.ok) {
-      const newTodo = await response.json()
-      todoList.value.push({
-        id: newTodo.id,
-        title: newTodo.title,
-        completed: newTodo.completed,
-        editing: false
-      })
+      await fetchTodos()
     }
   } catch (err) {
     console.log(err)
@@ -68,14 +66,33 @@ const setEditing = (id) => {
   todoList.value.filter(t => t.id !== id).forEach(t => t.editing = false)
 }
 
-const completeTodo = (id) => {
+const completeTodo = async (id) => {
   const todo = todoList.value.find(t => t.id === id)
 
-  todo.completed = !todo.completed
+  console.log(todo, id)
+  await updateTodo(id, todo.title, !todo.completed)
 }
 
-const updateTodo = (id, title, completed) => {
-  // TODO: update todo
+const updateTodo = async (id, title, completed) => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id,
+        title,
+        completed
+      })
+    })
+
+    if (response.ok) {
+      await fetchTodos()
+    }
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 const deleteTodo = (id) => {
@@ -109,6 +126,7 @@ const disableEditing = () => {
       @edit-todo="setEditing"
       @complete-todo="completeTodo"
       @delete-todo="deleteTodo"
+      @update-todo="updateTodo"
     />
     <h4 v-show="loading">Loading...</h4>
   </div>
