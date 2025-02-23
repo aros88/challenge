@@ -17,6 +17,7 @@ const emitCreateTodo = () => {
       type="text"
       placeholder="New todo..."
       required
+      autofocus
     />
     <button @click="emitCreateTodo">Create</button>
   </form>
