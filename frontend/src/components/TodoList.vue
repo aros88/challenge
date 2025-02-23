@@ -95,11 +95,21 @@ const updateTodo = async (id, title, completed) => {
   }
 }
 
-const deleteTodo = (id) => {
-  const todo = todoList.value.find(t => t.id === id)
+const deleteTodo = async (id) => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
 
-  todo.completed = !todo.completed
-  todoList.value = todoList.value.filter(t => t.id != id)
+    if (response.ok) {
+      await fetchTodos()
+    }
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 const disableEditing = () => {
