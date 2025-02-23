@@ -22,7 +22,8 @@ const toggleMobileMenu = () => {
             <IconClose style="cursor: pointer; max-width: 40px;" @click="toggleMobileMenu" />
           </div>
           <ul>
-            <li>Home</li>
+            <li><RouterLink to="/">Home</RouterLink></li>
+            <li><RouterLink to="/about">About</RouterLink></li>
           </ul>
         </div>
       </div>
@@ -31,7 +32,7 @@ const toggleMobileMenu = () => {
       </div>
       <ul>
         <li><RouterLink to="/">Home</RouterLink></li>
-        <li>About</li>
+        <li><RouterLink to="/about">About</RouterLink></li>
       </ul>
     </nav>
   </header>
