@@ -1,0 +1,38 @@
+services:
+  api:
+    container_name: api
+    command: > 
+      bash -c "
+        npm run migrate:up &&
+        npm run test &&
+        nodemon app.js
+      "
+    build: ./api/
+    volumes:
+      - ./api/:/api
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - postgres
+      - test-postgres
+    env_file:
+      - ./api/.env
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
+      - POSTGRES_DB=postgres
+  test-postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=test
+      - POSTGRES_DB=postgres
