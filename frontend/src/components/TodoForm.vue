@@ -1,11 +1,24 @@
 <script setup>
-defineEmits(["create-todo-focused"])
+import { ref } from 'vue';
+const emit = defineEmits(["create-todo-focused", "create-todo"])
+
+const todoTitle = ref("")
+
+const emitCreateTodo = () => {
+  emit('create-todo', todoTitle.value)
+}
 </script>
 
 <template>
   <form class="form">
-    <input @focusin="$emit('create-todo-focused')" type="text" placeholder="New todo..." required />
-    <button>Create</button>
+    <input
+      @focusin="$emit('create-todo-focused')"
+      v-model="todoTitle"
+      type="text"
+      placeholder="New todo..."
+      required
+    />
+    <button @click="emitCreateTodo">Create</button>
   </form>
 </template>
 

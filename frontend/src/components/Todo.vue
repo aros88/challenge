@@ -1,7 +1,7 @@
 <script setup>
 import IconClose from './icons/IconClose.vue';
   
-  defineEmits(["edit-todo", "complete-todo", "delete-todo"])
+  const emit = defineEmits(["edit-todo", "complete-todo", "delete-todo"])
 
   defineProps({
     id: {

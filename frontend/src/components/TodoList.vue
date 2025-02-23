@@ -34,11 +34,31 @@ onMounted(async () => {
   }
 })
 
-const createTodo = (title, completed) => {
-  todoList.push({
-    title,
-    completed
-  })
+const createTodo = async (title) => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title,
+        completed: false
+      })
+    })
+
+    if (response.ok) {
+      const newTodo = await response.json()
+      todoList.value.push({
+        id: newTodo.id,
+        title: newTodo.title,
+        completed: newTodo.completed,
+        editing: false
+      })
+    }
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const setEditing = (id) => {
@@ -76,6 +96,7 @@ const disableEditing = () => {
   <div>
     <h2>Todos</h2>
     <TodoForm
+      @create-todo="createTodo"
       @create-todo-focused="disableEditing"
     />
     <Todo
