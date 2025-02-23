@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { RouterView } from 'vue-router';
 import IconClose from "./icons/IconClose.vue";
 import IconHamburger from './icons/IconHamburger.vue';
 
@@ -42,7 +41,7 @@ const toggleMobileMenu = () => {
 
 <style scoped>
 header {
-  background-color: lightgrey;
+  background-color: #A3C4F3;
   width: 100%;
   position: absolute;
   left: 0;
@@ -64,7 +63,7 @@ nav ul {
 nav ul li {
   padding: 1rem;
   margin-left: 0.5rem;
-  background-color: grey;
+  background-color: #A3C4F3;
   border-radius: 0.5rem;
   font-size: 1.25rem;
   color: white;
@@ -72,7 +71,7 @@ nav ul li {
 
 nav ul li:hover {
   cursor: pointer;
-  background-color: darkgrey;
+  background-color: #90DBF4;
 }
 
 nav ul li a {
@@ -84,6 +83,7 @@ nav ul li a {
   font-size: 2rem;
   margin-top: 1rem;
   margin-left: 1rem;
+  color: white;
 }
 
 .mobile-menu {
