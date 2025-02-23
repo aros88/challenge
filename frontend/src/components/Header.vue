@@ -113,7 +113,7 @@ nav ul li a {
   .mobile-menu-list {
     width: 50%;
     height: 100%;
-    background-color: grey;
+    background-color: #A3C4F3;
     z-index: 1;
     position: fixed;
     top: 0;

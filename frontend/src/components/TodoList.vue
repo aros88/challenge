@@ -1,14 +1,97 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+import Todo from './Todo.vue';
 import TodoForm from './TodoForm.vue';
 
+const todoList = ref([]);
+const loading = ref(false)
+
+onMounted(async () => {
+  loading.value = true
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks`)
+    if (response.ok) {
+      const todos = await response.json()
+
+      todoList.value = todos.map(todo => {
+        return {
+          id: todo.id,
+          title: todo.title,
+          completed: todo.completed,
+          editing: false
+        }
+      })
+
+      loading.value = false
+    } else {
+      console.error('error fetching data')
+    }
+  } catch (err) {
+    console.error('error fetching data')
+  } finally {
+    loading.value = false
+  }
+})
+
+const createTodo = (title, completed) => {
+  todoList.push({
+    title,
+    completed
+  })
+}
+
+const setEditing = (id) => {
+  const todo = todoList.value.find(t => t.id === id)
+
+  todo.editing = true
+  todoList.value.filter(t => t.id !== id).forEach(t => t.editing = false)
+}
+
+const completeTodo = (id) => {
+  const todo = todoList.value.find(t => t.id === id)
+
+  todo.completed = !todo.completed
+}
+
+const updateTodo = (id, title, completed) => {
+  // TODO: update todo
+}
+
+const deleteTodo = (id) => {
+  const todo = todoList.value.find(t => t.id === id)
+
+  todo.completed = !todo.completed
+  todoList.value = todoList.value.filter(t => t.id != id)
+}
+
+const disableEditing = () => {
+  todoList.value.forEach(t => {
+    t.editing = false
+  })
+}
 </script>
 
 <template>
   <div>
     <h2>Todos</h2>
-    <TodoForm />
+    <TodoForm
+      @create-todo-focused="disableEditing"
+    />
+    <Todo
+      v-show="!loading"
+      v-for="todo in todoList"
+      :id="todo.id"
+      :title="todo.title"
+      :completed="todo.completed"
+      :editing="todo.editing"
+      @edit-todo="setEditing"
+      @complete-todo="completeTodo"
+      @delete-todo="deleteTodo"
+    />
+    <h4 v-show="loading">Loading...</h4>
   </div>
 </template>
 
-<styles scoped>
-</styles>
+<style scoped>
+</style>

@@ -1,9 +1,10 @@
 <script setup>
+defineEmits(["create-todo-focused"])
 </script>
 
 <template>
   <form class="form">
-    <input type="text" placeholder="New todo..." required />
+    <input @focusin="$emit('create-todo-focused')" type="text" placeholder="New todo..." required />
     <button>Create</button>
   </form>
 </template>
