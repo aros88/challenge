@@ -134,7 +134,7 @@ const deleteTodo = async (id) => {
     if (response.ok) {
       state.todos = state.todos.filter((t) => t.id !== id);
       if (state.todos.length === 0 && state.pagination.page > 1) {
-        await fetchTodos(state.pagination.page - 1)
+        await fetchTodos(state.pagination.page - 1);
       }
       reRenderKey.value = reRenderKey.value + 1;
     }

@@ -54,7 +54,7 @@
           </li>
         </ul>
       </li>
-      <li>NodeJS & yarn installed</li>
+      <li>NodeJS & YARN installed</li>
     </ul>
     <p>To run the project, type the following in the terminal from the root folder:</p>
     <pre>make build-run</pre>
