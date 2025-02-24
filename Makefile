@@ -1,16 +1,16 @@
 
 build:
-	cd api && yarn install
+	cd api && npm install
 	cd api && cp .env.sample .env
-	cd frontend && yarn install
+	cd frontend && npm install
 	cd frontend && cp .env.sample .env
 	docker compose down
 	docker compose build
 
 run:
 	docker compose up &
-	cd frontend && yarn run dev &
-	cd frontend && yarn run electron
+	cd frontend && npm run dev &
+	cd frontend && npm run electron
 
 build-run:
 	make build
