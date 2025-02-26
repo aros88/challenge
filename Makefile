@@ -9,6 +9,7 @@ build:
 
 run:
 	docker compose up &
+	sleep 5
 	cd frontend && yarn run dev &
 	cd frontend && yarn run electron
 

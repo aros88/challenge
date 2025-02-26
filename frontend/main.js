@@ -1,5 +1,6 @@
+/* eslint no-undef: "off" */
 // main.js
-const { app, BrowserWindow } = require('electron');
+import { app, BrowserWindow } from 'electron';
 
 let mainWindow;
 
@@ -9,6 +10,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false
     },
   });
 

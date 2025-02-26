@@ -1,24 +1,24 @@
 <script setup>
 import { reactive, ref } from 'vue';
-const emit = defineEmits(["create-todo-focused", "create-todo"])
+const emit = defineEmits(['create-todo-focused', 'create-todo']);
 
-const todoTitle = ref("")
+const todoTitle = ref('');
 const errorState = reactive({
   error: false,
-  msg: null
-})
+  msg: null,
+});
 
-const emitCreateTodo = (evt) => {
-  if (todoTitle.value == null) return
+const emitCreateTodo = () => {
+  if (todoTitle.value === null || todoTitle.value === undefined) return;
   if (todoTitle.value.trim() === '') {
-    errorState.error = true
-    errorState.msg = "Title cannot be blank"
+    errorState.error = true;
+    errorState.msg = 'Title cannot be blank';
 
-    return
+    return;
   }
 
-  emit('create-todo', todoTitle.value)
-}
+  emit('create-todo', todoTitle.value);
+};
 </script>
 
 <template>
@@ -39,22 +39,22 @@ const emitCreateTodo = (evt) => {
 </template>
 
 <style scoped>
-  .form input {
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-    width: 40%;
-    max-width: 720px;
-  }
+.form input {
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  width: 40%;
+  max-width: 720px;
+}
 
-  .form button {
-    padding: 0.5rem;
-    background-color: #98F5E1;
-    border-radius: 0.25rem;
-    cursor: pointer;
-  }
+.form button {
+  padding: 0.5rem;
+  background-color: #98f5e1;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
 
-  .error-msg {
-    color: #d23737;
-    font-weight: bold;
-  }
+.error-msg {
+  color: #d23737;
+  font-weight: bold;
+}
 </style>

@@ -1,13 +1,13 @@
 <script setup>
-import { ref } from "vue";
-import IconClose from "./icons/IconClose.vue";
+import { ref } from 'vue';
+import IconClose from './icons/IconClose.vue';
 import IconHamburger from './icons/IconHamburger.vue';
 
-const mobileMenuOpen = ref(false)
+const mobileMenuOpen = ref(false);
 
 const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value
-}
+  mobileMenuOpen.value = !mobileMenuOpen.value;
+};
 </script>
 
 <template>
@@ -15,11 +15,11 @@ const toggleMobileMenu = () => {
     <nav>
       <div class="mobile-menu">
         <div class="menu-button">
-          <IconHamburger style="max-width: 50px;" @click="toggleMobileMenu"/>
+          <IconHamburger style="max-width: 50px" @click="toggleMobileMenu" />
         </div>
         <div v-show="mobileMenuOpen" class="mobile-menu-list">
           <div class="close-menu-button">
-            <IconClose style="cursor: pointer; max-width: 40px;" @click="toggleMobileMenu" />
+            <IconClose style="cursor: pointer; max-width: 40px" @click="toggleMobileMenu" />
           </div>
           <ul>
             <li><RouterLink to="/">Home</RouterLink></li>
@@ -27,9 +27,7 @@ const toggleMobileMenu = () => {
           </ul>
         </div>
       </div>
-      <div class="title">
-        MyTodos!
-      </div>
+      <div class="title">MyTodos!</div>
       <ul>
         <li><RouterLink to="/">Home</RouterLink></li>
         <li><RouterLink to="/about">About</RouterLink></li>
@@ -42,7 +40,7 @@ const toggleMobileMenu = () => {
 
 <style scoped>
 header {
-  background-color: #A3C4F3;
+  background-color: #a3c4f3;
   width: 100%;
   position: absolute;
   left: 0;
@@ -64,7 +62,7 @@ nav ul {
 nav ul li {
   padding: 1rem;
   margin-left: 0.5rem;
-  background-color: #A3C4F3;
+  background-color: #a3c4f3;
   border-radius: 0.5rem;
   font-size: 1.25rem;
   color: white;
@@ -72,7 +70,7 @@ nav ul li {
 
 nav ul li:hover {
   cursor: pointer;
-  background-color: #90DBF4;
+  background-color: #90dbf4;
 }
 
 nav ul li a {
@@ -93,7 +91,7 @@ nav ul li a {
 
 @media (max-width: 1024px) {
   nav ul {
-    display: none
+    display: none;
   }
 
   .title {
@@ -114,7 +112,7 @@ nav ul li a {
   .mobile-menu-list {
     width: 50%;
     height: 100%;
-    background-color: #A3C4F3;
+    background-color: #a3c4f3;
     z-index: 1;
     position: fixed;
     top: 0;

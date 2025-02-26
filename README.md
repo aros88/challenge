@@ -29,3 +29,15 @@
 <p>Due to the contraint of not being able to use a css framework the styles took longer than usual to develop and because of lack of time they could be better. Picked a color palette that looked good at first, but I am no longer sure if that is the case :S</p>
 <p>Pagination was added, with a default max tasks per page of 5, as a way to keep the views as minimalistic as possible</p>
 <p>CSS media queries were implemented to have the application be responsive in the face of different window sizes</p>
+
+# Update:
+
+* Fix code style inconsistencies &#x2611;
+* Added lint rules &#x2611;
+* Fix first task creation error &#x2611;
+* Fix last element of page deletion error &#x2611;
+* Add unit tests &#x2612;
+* Add settings page to select data source (api or local storage) &#x2612;
+* Add toast error messages &#x2612;
+* Create CSS grid &#x2612;
+* Improve look & feel of the UI &#x2612;
