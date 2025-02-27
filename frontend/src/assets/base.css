@@ -1,0 +1,14 @@
+:root {
+  --header-color: black;
+  --primary-color: black;
+  --secondary-color: lightgrey;
+  --error-color: #d23737;
+  --confirm-color: #98f5e1;
+
+  --input-border-radius: 0.25rem;
+  --input-border-width: 0.15rem;
+}
+
+body {
+  margin: 0px;
+}

@@ -8,30 +8,42 @@ const errorState = reactive({
   msg: null,
 });
 
+const onSubmit = (evt) => {
+  const result = emitCreateTodo();
+  if (!result) {
+    evt.preventDefault();
+  }
+};
+
 const emitCreateTodo = () => {
   if (todoTitle.value === null || todoTitle.value === undefined) return;
   if (todoTitle.value.trim() === '') {
+
     errorState.error = true;
     errorState.msg = 'Title cannot be blank';
 
-    return;
+    return false;
   }
 
   emit('create-todo', todoTitle.value);
+
+  return true;
 };
 </script>
 
 <template>
-  <form class="form">
-    <input
-      @focusin="$emit('create-todo-focused')"
-      v-model="todoTitle"
-      type="text"
-      placeholder="New todo..."
-      required
-      autofocus
-    />
-    <button @click="emitCreateTodo">Create</button>
+  <form class="form" v-on:submit="onSubmit">
+    <div class="single-input-form">
+      <input
+        @focusin="$emit('create-todo-focused')"
+        v-model="todoTitle"
+        type="text"
+        placeholder="New todo..."
+        required
+        autofocus
+      />
+      <button type="submit">Create</button>
+    </div>
     <p v-show="errorState.error" class="error-msg">
       {{ errorState.msg }}
     </p>
@@ -39,18 +51,8 @@ const emitCreateTodo = () => {
 </template>
 
 <style scoped>
-.form input {
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  width: 40%;
-  max-width: 720px;
-}
-
-.form button {
-  padding: 0.5rem;
-  background-color: #98f5e1;
-  border-radius: 0.25rem;
-  cursor: pointer;
+.form {
+  width: 100%;
 }
 
 .error-msg {

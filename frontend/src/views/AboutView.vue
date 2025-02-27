@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <main class="container">
+  <main>
     <h2>About</h2>
     <p>Welcome to the todo app!</p>
 

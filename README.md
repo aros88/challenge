@@ -36,8 +36,7 @@
 * Added lint rules &#x2611;
 * Fix first task creation error &#x2611;
 * Fix last element of page deletion error &#x2611;
-* Add unit tests &#x2612;
-* Add settings page to select data source (api or local storage) &#x2612;
-* Add toast error messages &#x2612;
-* Create CSS grid &#x2612;
-* Improve look & feel of the UI &#x2612;
+* Add unit tests &#x2611;
+* Add global error messages &#x2611;
+* Create CSS grid &#x2611;
+* Improve look & feel of the UI &#x2611;

@@ -1,7 +1,45 @@
-/* @import './base.css'; */
+@import './base.css';
 
 .container {
-  padding-top: 5rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  display: grid;
+  row-gap: 1rem;
+  column-gap: 0.5rem;
+  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-areas: 
+    'hd hd hd'
+    '. ct .';
+  height: 100vh;
+}
+
+.single-input-form {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  border-style: solid;
+  border-width: var(--input-border-width);
+  border-radius: var(--input-border-radius);
+
+  input {
+    border-style: none;
+    flex-grow: 2;
+    padding: 0.5rem;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  button {
+    background-color: var(--confirm-color);
+    cursor: pointer;
+    flex-grow: 1;
+    border-style: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
 }

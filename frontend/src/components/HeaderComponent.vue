@@ -34,17 +34,13 @@ const toggleMobileMenu = () => {
       </ul>
     </nav>
   </header>
-
-  <RouterView />
 </template>
 
 <style scoped>
 header {
-  background-color: #a3c4f3;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
+  background-color: var(--header-color);
+  height: 100%;
+  grid-area: 'hd';
 }
 
 nav {
@@ -62,7 +58,7 @@ nav ul {
 nav ul li {
   padding: 1rem;
   margin-left: 0.5rem;
-  background-color: #a3c4f3;
+  background-color: var(--header-color);
   border-radius: 0.5rem;
   font-size: 1.25rem;
   color: white;
@@ -70,7 +66,8 @@ nav ul li {
 
 nav ul li:hover {
   cursor: pointer;
-  background-color: #90dbf4;
+  background-color: var(--secondary-color);
+  color: black;
 }
 
 nav ul li a {
@@ -112,7 +109,7 @@ nav ul li a {
   .mobile-menu-list {
     width: 50%;
     height: 100%;
-    background-color: #a3c4f3;
+    background-color: var(--header-color);
     z-index: 1;
     position: fixed;
     top: 0;

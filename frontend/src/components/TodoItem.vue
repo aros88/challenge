@@ -72,7 +72,7 @@ const cancelEdit = () => {
   display: flex;
   justify-content: flex-start;
   background-color: white;
-  width: 40%;
+  width: 100%;
   border-radius: 0.25rem;
   margin-top: 1rem;
   padding: 0.25rem;
@@ -117,6 +117,5 @@ const cancelEdit = () => {
   max-width: 40px;
   cursor: pointer;
   margin-left: 0.5rem;
-  /* margin-right: 0.25rem; */
 }
 </style>

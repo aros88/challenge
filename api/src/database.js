@@ -1,9 +1,9 @@
-require('dotenv').config()
-const { Sequelize } = require('sequelize')
+require('dotenv').config();
+const { Sequelize } = require('sequelize');
 
-let connectionUrl = process.env.DB_CONNECTION_URL
+let connectionUrl = process.env.DB_CONNECTION_URL;
 if (process.env.NODE_ENV === 'test') {
-  connectionUrl = process.env.TEST_DB_CONNECTION_URL
+  connectionUrl = process.env.TEST_DB_CONNECTION_URL;
 }
 
-module.exports = new Sequelize(connectionUrl)
+module.exports = new Sequelize(connectionUrl);

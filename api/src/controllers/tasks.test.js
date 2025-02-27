@@ -1,18 +1,18 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-const taskModule = require('../models/task')
-const request = require('supertest')
+const taskModule = require('../models/task');
+const request = require('supertest');
 const { DataTypes } = require('sequelize');
-const db = require('../database')
-const Task = taskModule(db, DataTypes)
+const db = require('../database');
+const Task = taskModule(db, DataTypes);
 
-const app = require('../../express')
+const app = require('../../express');
 
 app.listen(8081, () => {
-  console.log('test server running on port 8081')
-})
+  console.log('test server running on port 8081');
+});
 
 describe('tasks endpoints', () => {
-  let tasks = []
+  let tasks = [];
   beforeEach(async () => {
     tasks = await Task.bulkCreate([
       {
@@ -23,27 +23,27 @@ describe('tasks endpoints', () => {
         title: 'Second Task',
         completed: true
       }
-    ])
-  })
+    ]);
+  });
 
   afterEach(() => {
     Task.destroy({
       truncate: true
-    })
-  })
+    });
+  });
 
   test('returns list of tasks', async () => {
     const response = await request(app)
-      .get('/tasks')
+      .get('/tasks');
 
-    expect(response.status).toEqual(200)
-    expect(response.body.tasks.length).toEqual(2)
+    expect(response.status).toEqual(200);
+    expect(response.body.tasks.length).toEqual(2);
     tasks.forEach((t, i) => {
-      expect(response.body.tasks[i].id).toEqual(t.id)
-      expect(response.body.tasks[i].title).toEqual(t.title)
-      expect(response.body.tasks[i].completed).toEqual(t.completed)
-    })
-  })
+      expect(response.body.tasks[i].id).toEqual(t.id);
+      expect(response.body.tasks[i].title).toEqual(t.title);
+      expect(response.body.tasks[i].completed).toEqual(t.completed);
+    });
+  });
 
   test('creates a task', async () => {
     const response = await request(app)
@@ -51,36 +51,36 @@ describe('tasks endpoints', () => {
       .send({
         title: 'Test Task',
         completed: false
-      })
+      });
 
-    expect(response.status).toEqual(201)
-    expect(response.body.title).toEqual('Test Task')
-    expect(response.body.completed).toEqual(false)
-  })
+    expect(response.status).toEqual(201);
+    expect(response.body.title).toEqual('Test Task');
+    expect(response.body.completed).toEqual(false);
+  });
 
   test('updates a task', async () => {
-    const taskId = tasks[0].id
+    const taskId = tasks[0].id;
     const response = await request(app)
       .patch(`/tasks/${taskId}`)
       .send({
         title: 'Updated Task',
         completed: false
-      })
+      });
 
-    expect(response.status).toEqual(200)
+    expect(response.status).toEqual(200);
 
-    const task = await Task.findByPk(taskId)
-    expect(task.title).toEqual('Updated Task')
-  })
+    const task = await Task.findByPk(taskId);
+    expect(task.title).toEqual('Updated Task');
+  });
 
   test('updates a task', async () => {
-    const taskId = tasks[0].id
+    const taskId = tasks[0].id;
     const response = await request(app)
-      .delete(`/tasks/${taskId}`)
+      .delete(`/tasks/${taskId}`);
 
-    expect(response.status).toEqual(204)
+    expect(response.status).toEqual(204);
 
-    const task = await Task.findByPk(taskId)
-    expect(task).toBeNull()
-  })
-})
+    const task = await Task.findByPk(taskId);
+    expect(task).toBeNull();
+  });
+});
